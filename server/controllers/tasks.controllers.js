@@ -12,16 +12,30 @@ export const getTasks = async (req, res) => {
   }
 };
 
-export const getTask = async (req, res) => {
+export const getTask = async (req, res, next) => {
   try {
     const [result] = await pool.query("SELECT * FROM tasks WHERE id = ?", [
       req.params.id,
     ]);
-    if (result.length === 0)
+
+    if (result.length === 0) {
       return res.status(404).json({ message: "Task not found" });
-    res.json(result);
+    }
+    // dto -> Data Transfer Object
+    // class TaskDto {
+    //   constructor(args){
+    //     this.id = args.id
+    //     this.title = args.title
+    //     this.description = args.description
+    //     this.done = Boolean(args.done)
+    //     this.createdAt = args.createdAt
+    //   }
+    // }
+
+    const [task] = result;
+    return res.json(task);
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return next(error);
   }
 };
 

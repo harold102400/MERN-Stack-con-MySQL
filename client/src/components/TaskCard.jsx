@@ -1,5 +1,6 @@
 import React from "react";
 import { useTasks } from "../context/TaskProvider";
+import { Link } from "react-router-dom"
 
 const TaskCard = ({ task }) => {
   const { deleteTask } = useTasks()
@@ -11,7 +12,7 @@ const TaskCard = ({ task }) => {
       <span>{task.done === 1 ? "✔" : "❌"}</span>
       <span>{task.createdAt}</span>
       <button onClick={() => deleteTask(task.id)}>Delete</button>
-      <button>Edit</button>
+      <Link to={`/edit/${task.id}`}>Edit</Link>
     </div>
   );
 };
