@@ -16,14 +16,14 @@ const TaskForm = () => {
   });
 
   const { register, handleSubmit, setValue } = useForm();
-  
+
   const onSubmit = async (data, e) => { 
     if(params.id){
         await updateTask(params.id, data)
-        navigate("/")
       } else {
-       await createTask(data);
+        await createTask(data);
       }
+      navigate("/")
       e.target.reset()
    };
 
@@ -47,13 +47,14 @@ const TaskForm = () => {
 
   return (
     <div>
-      <h1>{params.id ? "Edit Task" : "New Task"}</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Title</label>
+      <form className="bg-slate-300 max-w-sm rounded-md p-4 mx-auto mt-10" onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="text-xl-font-bold uppercase text-center">{params.id ? "Edit Task" : "New Task"}</h1>
+        <label className="block">Title</label>
         <input
           type="text"
           name="title"
+          className="px-2 py-1 rounded-sm w-full"
           placeholder="Write a title"
           {...register('title', {
             required: true,
@@ -61,17 +62,18 @@ const TaskForm = () => {
           })}  
         />
 
-        <label>Description</label>
+        <label className="block">Description</label>
         <textarea
           name="description"
           rows="3"
+          className="px-2 py-1 rounded-sm w-full"
           placeholder="Write a description"
           {...register('description', {
             required: true,
             minLength: 2
           })} 
         ></textarea>
-        <button type="submit">
+        <button type="submit" className="block bg-indigo-500 px-2 py-1 text-white w-full rounded-md">
           send
         </button>
       </form>
