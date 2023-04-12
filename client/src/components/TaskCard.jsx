@@ -3,7 +3,12 @@ import { useTasks } from "../context/TaskProvider";
 import { Link } from "react-router-dom"
 
 const TaskCard = ({ task }) => {
-  const { deleteTask } = useTasks()
+  const { deleteTask, toggleTaskDone } = useTasks()
+
+  const handleDone = async() => {
+    await toggleTaskDone(task.id)
+    console.log(toggleTaskDone)
+  }
   
   return (
     <div>
@@ -13,6 +18,9 @@ const TaskCard = ({ task }) => {
       <span>{task.createdAt}</span>
       <button onClick={() => deleteTask(task.id)}>Delete</button>
       <Link to={`/edit/${task.id}`}>Edit</Link>
+      <button onClick={() => handleDone(task.done)}>
+        Toggle Task
+      </button>
     </div>
   );
 };
